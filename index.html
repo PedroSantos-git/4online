@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Projetos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="site-info">
+            <h1>Meus Projetos</h1>
+            <p>Bem-vindo ao meu portfólio de projetos!</p>
+        </div>
+        <div class="machine-uuid">
+            <strong>UUID da Máquina:</strong> <span id="uuid"></span>
+        </div>
+    </header>
+
+    <main>
+        <section class="add-card">
+            <h2>Adicionar Novo Projeto</h2>
+            <form id="projectForm">
+                <input type="text" id="projectName" placeholder="Nome do Projeto" required>
+                <input type="url" id="projectUrl" placeholder="URL do Projeto" required>
+                <button type="submit">Adicionar Projeto</button>
+            </form>
+        </section>
+
+        <section class="projects">
+            <div id="projectsContainer" class="cards-container"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
