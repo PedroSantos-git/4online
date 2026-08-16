@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Projetos</title>
+    <title>My Projects</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="site-info">
-            <h1>Meus Projetos</h1>
-            <p>Bem-vindo ao meu portfólio de projetos!</p>
+            <h1>My Projects</h1>
+            <p>Welcome to my project portfolio!</p>
         </div>
         <div class="machine-uuid">
-            <strong>UUID da Máquina:</strong> <span id="uuid"></span>
+            <strong>Machine UUID:</strong> <span id="uuid"></span>
         </div>
     </header>
 
     <main>
         <section class="add-card">
-            <h2>Adicionar Novo Projeto</h2>
+            <h2>Add New Project</h2>
             <form id="projectForm">
-                <input type="text" id="projectName" placeholder="Nome do Projeto" required>
-                <input type="url" id="projectUrl" placeholder="URL do Projeto" required>
-                <button type="submit">Adicionar Projeto</button>
+                <input type="text" id="projectName" placeholder="Project Name" required>
+                <input type="url" id="projectUrl" placeholder="Project URL" required>
+                <button type="submit">Add Project</button>
             </form>
         </section>
 
@@ -31,6 +31,10 @@
             <div id="projectsContainer" class="cards-container"></div>
         </section>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Pedro Santos. All rights reserved.</p>
+    </footer>
 
     <script src="app.js"></script>
 </body>

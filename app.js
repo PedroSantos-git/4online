@@ -35,7 +35,7 @@ function renderProjects() {
             <div class="project-info">
                 <h3>${project.name}</h3>
                 <a href="${project.url}" target="_blank">${project.url}</a>
-                <button class="delete-btn" data-index="${index}">Excluir</button>
+                <button class="delete-btn" data-index="${index}">Delete</button>
             </div>
         `;
 
