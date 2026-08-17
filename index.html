@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Projects</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <header>
@@ -15,10 +16,15 @@
         <div class="machine-uuid">
             <strong>Machine UUID:</strong> <span id="uuid"></span>
         </div>
+        <div class="auth-area">
+            <span id="signedInAs"></span>
+            <div id="g_id_signin"></div>
+            <button id="signOutBtn" type="button" style="display:none">Sign out</button>
+        </div>
     </header>
 
     <main>
-        <section class="add-card">
+        <section class="add-card" id="addCard" style="display:none">
             <h2>Add New Project</h2>
             <form id="projectForm">
                 <input type="text" id="projectName" placeholder="Project Name" required>

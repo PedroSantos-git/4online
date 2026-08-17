@@ -1,0 +1,10 @@
+{
+  "name": "4online",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "google-auth-library": "^10.0.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
