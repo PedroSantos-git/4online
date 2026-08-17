@@ -1,4 +1,4 @@
-const GOOGLE_CLIENT_ID = 'REPLACE_WITH_GOOGLE_CLIENT_ID';
+const GOOGLE_CLIENT_ID = '30659702491-q08msrph71cfl4aesafh50fmap7ef3fv.apps.googleusercontent.com';
 
 function generateUUID() {
     let uuid = localStorage.getItem('machineUUID');
