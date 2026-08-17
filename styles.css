@@ -30,7 +30,6 @@ body {
 header,
 .add-card,
 .project-card,
-.machine-uuid,
 footer {
     position: relative;
     isolation: isolate;
@@ -49,7 +48,6 @@ footer {
 header::before,
 .add-card::before,
 .project-card::before,
-.machine-uuid::before,
 footer::before {
     content: '';
     position: absolute;
@@ -71,21 +69,45 @@ header {
 }
 
 .site-info h1 {
-    font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #ffffff;
     letter-spacing: -0.02em;
-    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
 }
 
 .site-info p {
     color: rgba(240, 240, 242, 0.6);
 }
 
-.machine-uuid {
-    padding: 0.75rem 1.25rem;
-    border-radius: 999px;
-    color: rgba(240, 240, 242, 0.9);
+/* Artistic wordmark: a bright band swept across the letters on hover,
+   like light catching the curve of a piece of glass, plus a slight
+   lift/tilt so it feels tactile rather than flat text. */
+.signature {
+    display: inline-block;
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-style: italic;
+    cursor: default;
+    background: linear-gradient(
+        100deg,
+        #ffffff 0%, #ffffff 42%,
+        #9a9aa4 48%, #ffffff 54%, #ffffff 58%,
+        #9a9aa4 64%,
+        #ffffff 70%, #ffffff 100%
+    );
+    background-size: 260% 100%;
+    background-position: 100% 0;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 1px 16px rgba(255, 255, 255, 0.15);
+    transition: background-position 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.4s ease;
+    transform: perspective(400px) rotateX(0deg);
+}
+
+.signature:hover {
+    background-position: 0% 0;
+    transform: perspective(400px) rotateX(4deg) translateY(-2px);
 }
 
 .auth-area {
@@ -276,4 +298,10 @@ footer {
     max-width: 1200px;
     border-radius: 28px 28px 0 0;
     color: rgba(240, 240, 242, 0.5);
+}
+
+.footer-uuid {
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    color: rgba(240, 240, 242, 0.35);
 }
