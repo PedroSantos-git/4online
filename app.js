@@ -124,8 +124,11 @@ async function signOut() {
     await refreshSession();
 }
 
+let googleLoaded = false;
+let domReady = false;
+
 function initGoogleSignIn() {
-    if (!window.google || GOOGLE_CLIENT_ID === 'REPLACE_WITH_GOOGLE_CLIENT_ID') return;
+    if (!googleLoaded || !domReady) return;
 
     google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
@@ -136,6 +139,14 @@ function initGoogleSignIn() {
         { theme: 'outline', size: 'medium' }
     );
 }
+
+// Google's client library calls this global once it has finished loading,
+// regardless of whether the <script> tag used async/defer — avoids a race
+// where DOMContentLoaded fires before the library is ready.
+window.onGoogleLibraryLoad = () => {
+    googleLoaded = true;
+    initGoogleSignIn();
+};
 
 document.getElementById('projectForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -161,6 +172,7 @@ document.getElementById('signOutBtn').addEventListener('click', signOut);
 
 document.addEventListener('DOMContentLoaded', async () => {
     displayUUID();
+    domReady = true;
     initGoogleSignIn();
     await refreshSession();
     await loadProjects();
