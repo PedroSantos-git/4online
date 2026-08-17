@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
         return;
     }
 
-    const token = signSession(payload.email);
+    const token = signSession(payload.email, payload.name);
     res.setHeader('Set-Cookie', sessionCookie(token));
-    res.status(200).json({ isAdmin: true, email: payload.email });
+    res.status(200).json({ isAdmin: true, email: payload.email, name: payload.name });
 };

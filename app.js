@@ -87,16 +87,18 @@ function updateAdminUI() {
     addCard.style.display = isAdmin ? '' : 'none';
     signOutBtn.style.display = isAdmin ? '' : 'none';
     signInBtn.style.display = isAdmin ? 'none' : '';
-    signedInAs.textContent = isAdmin ? `Signed in as ${adminEmail}` : '';
+    signedInAs.textContent = isAdmin ? `Signed in as ${adminName || adminEmail}` : '';
 }
 
 let adminEmail = '';
+let adminName = '';
 
 async function refreshSession() {
     const res = await fetch('/api/auth/me');
     const data = await res.json();
     isAdmin = !!data.isAdmin;
     adminEmail = data.email || '';
+    adminName = data.name || '';
     updateAdminUI();
     renderProjects();
 }
@@ -136,7 +138,7 @@ function initGoogleSignIn() {
     });
     google.accounts.id.renderButton(
         document.getElementById('g_id_signin'),
-        { theme: 'outline', size: 'medium' }
+        { theme: 'outline', size: 'small' }
     );
 }
 

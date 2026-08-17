@@ -7,5 +7,5 @@ module.exports = (req, res) => {
         return;
     }
 
-    res.status(200).json({ isAdmin: true, email: session.email });
+    res.status(200).json({ isAdmin: true, email: session.email, name: session.name });
 };
