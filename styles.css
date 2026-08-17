@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 }
 
 html {
@@ -11,29 +11,53 @@ html {
 
 body {
     min-height: 100vh;
-    color: #e8e8ea;
+    color: #f0f0f2;
     background:
-        radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.08), transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(180, 180, 190, 0.10), transparent 45%),
-        radial-gradient(circle at 30% 85%, rgba(120, 120, 130, 0.12), transparent 50%),
-        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.06), transparent 45%),
-        linear-gradient(160deg, #0c0c0e 0%, #17171a 45%, #0a0a0b 100%);
+        radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.10), transparent 38%),
+        radial-gradient(circle at 88% 15%, rgba(190, 190, 200, 0.12), transparent 42%),
+        radial-gradient(circle at 25% 80%, rgba(130, 130, 140, 0.14), transparent 48%),
+        radial-gradient(circle at 92% 88%, rgba(255, 255, 255, 0.08), transparent 42%),
+        radial-gradient(circle at 50% 50%, rgba(90, 90, 100, 0.08), transparent 60%),
+        linear-gradient(160deg, #0a0a0c 0%, #18181b 45%, #08080a 100%);
     background-attachment: fixed;
 }
 
-/* Shared liquid glass surface */
+/* ---- Liquid glass surface ----
+   Every glass element gets: a translucent tinted body, heavy blurred
+   backdrop, a bright rim highlight along the top edge (light catching the
+   glass), a soft dark rim along the bottom, and a diagonal sheen overlay
+   that mimics a curved refractive surface. */
 header,
 .add-card,
 .project-card,
 .machine-uuid,
 footer {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.02) 55%, rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        0 12px 40px rgba(0, 0, 0, 0.45),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+header::before,
+.add-card::before,
+.project-card::before,
+.machine-uuid::before,
+footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0) 65%, rgba(255, 255, 255, 0.10) 100%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
 }
 
 header {
@@ -43,25 +67,25 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
-    border-radius: 0 0 20px 20px;
-    border-top: none;
+    border-radius: 0 0 28px 28px;
 }
 
 .site-info h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    color: #f5f5f7;
+    color: #ffffff;
     letter-spacing: -0.02em;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
 }
 
 .site-info p {
-    color: rgba(232, 232, 234, 0.6);
+    color: rgba(240, 240, 242, 0.6);
 }
 
 .machine-uuid {
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    color: rgba(232, 232, 234, 0.85);
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    color: rgba(240, 240, 242, 0.9);
 }
 
 main {
@@ -72,13 +96,13 @@ main {
 
 .add-card {
     padding: 2rem;
-    border-radius: 20px;
+    border-radius: 28px;
     margin-bottom: 2rem;
 }
 
 .add-card h2 {
     margin-bottom: 1rem;
-    color: #f5f5f7;
+    color: #ffffff;
     font-weight: 600;
     letter-spacing: -0.01em;
 }
@@ -92,45 +116,56 @@ main {
 #projectForm input {
     flex: 1;
     min-width: 200px;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
+    padding: 0.85rem 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
     font-size: 1rem;
     color: #f5f5f7;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
     transition: background-color 0.25s, border-color 0.25s;
 }
 
 #projectForm input::placeholder {
-    color: rgba(232, 232, 234, 0.4);
+    color: rgba(240, 240, 242, 0.4);
 }
 
 #projectForm input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 #projectForm button {
-    padding: 0.75rem 1.5rem;
-    background: rgba(255, 255, 255, 0.12);
-    color: #f5f5f7;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 10px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 0.85rem 1.75rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 500;
-    backdrop-filter: blur(8px);
+    font-weight: 600;
+    backdrop-filter: blur(12px);
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2);
     transition: background-color 0.25s, transform 0.15s, box-shadow 0.25s;
 }
 
 #projectForm button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.12));
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2);
 }
 
 #projectForm button:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
 }
 
 .projects {
@@ -144,25 +179,26 @@ main {
 }
 
 .project-card {
-    border-radius: 18px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    border-radius: 24px;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, background-color 0.35s ease;
 }
 
 .project-card:hover {
-    transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.09);
+    transform: translateY(-6px) scale(1.01);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04) 55%, rgba(255, 255, 255, 0.08));
     box-shadow:
-        0 16px 40px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.55),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.25);
 }
 
 .project-preview {
     width: 100%;
     height: 200px;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background-color: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .project-info {
@@ -171,38 +207,39 @@ main {
 
 .project-info h3 {
     margin-bottom: 0.5rem;
-    color: #f5f5f7;
+    color: #ffffff;
     font-weight: 600;
 }
 
 .project-info a {
-    color: rgba(232, 232, 234, 0.65);
+    color: rgba(240, 240, 242, 0.65);
     text-decoration: none;
     word-break: break-all;
     transition: color 0.2s;
 }
 
 .project-info a:hover {
-    color: #f5f5f7;
+    color: #ffffff;
     text-decoration: underline;
 }
 
 .delete-btn {
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.06);
-    color: rgba(232, 232, 234, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    padding: 0.5rem 1.1rem;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(240, 240, 242, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
     cursor: pointer;
     font-size: 0.875rem;
-    transition: background-color 0.25s, color 0.25s;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s;
 }
 
 .delete-btn:hover {
-    background: rgba(255, 90, 90, 0.15);
-    border-color: rgba(255, 90, 90, 0.3);
-    color: #ff9d9d;
+    background: rgba(255, 90, 90, 0.18);
+    border-color: rgba(255, 120, 120, 0.35);
+    color: #ffb3b3;
 }
 
 footer {
@@ -210,6 +247,6 @@ footer {
     padding: 1.5rem;
     margin: 2rem auto 0;
     max-width: 1200px;
-    border-radius: 20px 20px 0 0;
-    color: rgba(232, 232, 234, 0.5);
+    border-radius: 28px 28px 0 0;
+    color: rgba(240, 240, 242, 0.5);
 }
