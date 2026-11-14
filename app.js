@@ -246,47 +246,75 @@ function moveDraft(index, delta) {
     const target = index + delta;
     if (target < 0 || target >= reorderDraft.length) return;
     [reorderDraft[index], reorderDraft[target]] = [reorderDraft[target], reorderDraft[index]];
+    const list = document.getElementById('reorderList');
+    const scroll = list.scrollTop;
     renderReorderList();
+    list.scrollTop = scroll;
     document.querySelector(`#reorderList [data-id="${reorderDraft[target].id}"]`)
         ?.querySelectorAll('button')[delta < 0 ? 0 : 1]?.focus();
 }
 
 // Pointer-based drag (works with mouse, touch and pen, unlike HTML5 DnD on iOS).
+// Listeners live on window: moving the row in the DOM drops any pointer
+// capture on the handle, so element-level listeners would stop after one step.
 function startRowDrag(e, li) {
     e.preventDefault();
     const list = li.parentElement;
+    const pointerId = e.pointerId;
     li.classList.add('is-dragging');
-    const handle = e.currentTarget;
-    handle.setPointerCapture(e.pointerId);
+    let lastY = e.clientY;
+    let scrollTimer = null;
 
-    const onMove = (ev) => {
+    const reposition = () => {
         const siblings = [...list.children].filter((el) => el !== li);
         const before = siblings.find((el) => {
             const r = el.getBoundingClientRect();
-            return ev.clientY < r.top + r.height / 2;
+            return lastY < r.top + r.height / 2;
         });
         if (before) {
             if (li.nextElementSibling !== before) list.insertBefore(li, before);
         } else if (list.lastElementChild !== li) {
             list.appendChild(li);
         }
-        // Auto-scroll the list when dragging near its edges.
-        const lr = list.getBoundingClientRect();
-        if (ev.clientY < lr.top + 30) list.scrollTop -= 8;
-        else if (ev.clientY > lr.bottom - 30) list.scrollTop += 8;
     };
-    const onUp = () => {
-        handle.removeEventListener('pointermove', onMove);
-        handle.removeEventListener('pointerup', onUp);
-        handle.removeEventListener('pointercancel', onUp);
+
+    // Keep scrolling while the pointer is held near the list's edges.
+    const autoScroll = () => {
+        const lr = list.getBoundingClientRect();
+        const edge = 40;
+        let dy = 0;
+        if (lastY < lr.top + edge) dy = -Math.ceil((lr.top + edge - lastY) / 4);
+        else if (lastY > lr.bottom - edge) dy = Math.ceil((lastY - (lr.bottom - edge)) / 4);
+        if (dy) {
+            list.scrollTop += dy;
+            reposition();
+        }
+        scrollTimer = requestAnimationFrame(autoScroll);
+    };
+    scrollTimer = requestAnimationFrame(autoScroll);
+
+    const onMove = (ev) => {
+        if (ev.pointerId !== pointerId) return;
+        ev.preventDefault();
+        lastY = ev.clientY;
+        reposition();
+    };
+    const onUp = (ev) => {
+        if (ev.pointerId !== pointerId) return;
+        cancelAnimationFrame(scrollTimer);
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+        window.removeEventListener('pointercancel', onUp);
         li.classList.remove('is-dragging');
         const byId = new Map(reorderDraft.map((p) => [String(p.id), p]));
         reorderDraft = [...list.children].map((el) => byId.get(el.dataset.id));
+        const scroll = list.scrollTop;
         renderReorderList();
+        list.scrollTop = scroll;
     };
-    handle.addEventListener('pointermove', onMove);
-    handle.addEventListener('pointerup', onUp);
-    handle.addEventListener('pointercancel', onUp);
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
 }
 
 function openReorder() {
