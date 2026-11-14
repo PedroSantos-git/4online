@@ -31,7 +31,7 @@ let draggedId = null;
 function makeButton(className, label, onClick, title) {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = className;
+    btn.className = `glass-btn ${className}`;
     btn.textContent = label;
     if (title) btn.title = title;
     btn.addEventListener('click', onClick);
@@ -58,7 +58,7 @@ function buildEditForm(project) {
     actions.className = 'card-actions';
     const save = document.createElement('button');
     save.type = 'submit';
-    save.className = 'card-btn primary';
+    save.className = 'glass-btn card-btn primary';
     save.textContent = 'Save';
     actions.append(save, makeButton('card-btn', 'Cancel', () => { editingId = null; renderProjects(); }));
 
@@ -309,6 +309,16 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
 });
 
 document.getElementById('signOutBtn').addEventListener('click', signOut);
+
+// Liquid-glass glint: feed the pointer position to whichever glass surface is
+// under it, as --mx/--my, so the specular highlight follows the cursor.
+document.addEventListener('pointermove', (e) => {
+    const surface = e.target.closest?.('header, .add-card, .project-card, footer');
+    if (!surface) return;
+    const r = surface.getBoundingClientRect();
+    surface.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    surface.style.setProperty('--my', `${e.clientY - r.top}px`);
+}, { passive: true });
 
 document.addEventListener('DOMContentLoaded', async () => {
     displayUUID();
