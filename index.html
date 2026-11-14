@@ -16,6 +16,7 @@
         <div class="auth-area">
             <span id="signedInAs"></span>
             <div id="g_id_signin"></div>
+            <button id="reorderBtn" class="glass-btn" type="button" style="display:none">Reorder</button>
             <button id="signOutBtn" class="glass-btn" type="button" style="display:none">Sign out</button>
         </div>
     </header>
@@ -34,6 +35,18 @@
             <div id="projectsContainer" class="cards-container"></div>
         </section>
     </main>
+
+    <dialog id="reorderDialog" class="reorder-dialog" aria-labelledby="reorderTitle">
+        <div class="reorder-head">
+            <h2 id="reorderTitle">Reorder projects</h2>
+            <p>Drag the rows or use the arrows. The first one shows first on the site.</p>
+        </div>
+        <ol id="reorderList" class="reorder-list"></ol>
+        <div class="reorder-actions">
+            <button type="button" class="glass-btn card-btn" id="reorderCancel">Cancel</button>
+            <button type="button" class="glass-btn card-btn primary" id="reorderSave">Save order</button>
+        </div>
+    </dialog>
 
     <footer>
         <p>&copy; 2026 Pedro Santos. All rights reserved.</p>

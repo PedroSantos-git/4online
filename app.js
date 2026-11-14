@@ -199,6 +199,120 @@ async function updateProject(id, name, url) {
     return res.ok;
 }
 
+// ---- Reorder dialog: a compact, sortable list of all projects ----
+let reorderDraft = [];
+
+function hostOf(url) {
+    try { return new URL(url).host + new URL(url).pathname.replace(/\/$/, ''); } catch { return url; }
+}
+
+function renderReorderList() {
+    const list = document.getElementById('reorderList');
+    list.innerHTML = '';
+    reorderDraft.forEach((project, i) => {
+        const li = document.createElement('li');
+        li.className = 'reorder-item';
+        li.dataset.id = project.id;
+
+        const handle = document.createElement('span');
+        handle.className = 'reorder-handle';
+        handle.textContent = '⠿';
+        handle.setAttribute('aria-hidden', 'true');
+        handle.addEventListener('pointerdown', (e) => startRowDrag(e, li));
+
+        const num = document.createElement('span');
+        num.className = 'reorder-num';
+        num.textContent = i + 1;
+
+        const text = document.createElement('div');
+        text.className = 'reorder-text';
+        const name = document.createElement('strong');
+        name.textContent = project.name;
+        const host = document.createElement('small');
+        host.textContent = hostOf(project.url);
+        text.append(name, host);
+
+        const up = makeButton('card-btn icon', '↑', () => moveDraft(i, -1), `Move ${project.name} up`);
+        const down = makeButton('card-btn icon', '↓', () => moveDraft(i, 1), `Move ${project.name} down`);
+        up.disabled = i === 0;
+        down.disabled = i === reorderDraft.length - 1;
+
+        li.append(handle, num, text, up, down);
+        list.appendChild(li);
+    });
+}
+
+function moveDraft(index, delta) {
+    const target = index + delta;
+    if (target < 0 || target >= reorderDraft.length) return;
+    [reorderDraft[index], reorderDraft[target]] = [reorderDraft[target], reorderDraft[index]];
+    renderReorderList();
+    document.querySelector(`#reorderList [data-id="${reorderDraft[target].id}"]`)
+        ?.querySelectorAll('button')[delta < 0 ? 0 : 1]?.focus();
+}
+
+// Pointer-based drag (works with mouse, touch and pen, unlike HTML5 DnD on iOS).
+function startRowDrag(e, li) {
+    e.preventDefault();
+    const list = li.parentElement;
+    li.classList.add('is-dragging');
+    const handle = e.currentTarget;
+    handle.setPointerCapture(e.pointerId);
+
+    const onMove = (ev) => {
+        const siblings = [...list.children].filter((el) => el !== li);
+        const before = siblings.find((el) => {
+            const r = el.getBoundingClientRect();
+            return ev.clientY < r.top + r.height / 2;
+        });
+        if (before) {
+            if (li.nextElementSibling !== before) list.insertBefore(li, before);
+        } else if (list.lastElementChild !== li) {
+            list.appendChild(li);
+        }
+        // Auto-scroll the list when dragging near its edges.
+        const lr = list.getBoundingClientRect();
+        if (ev.clientY < lr.top + 30) list.scrollTop -= 8;
+        else if (ev.clientY > lr.bottom - 30) list.scrollTop += 8;
+    };
+    const onUp = () => {
+        handle.removeEventListener('pointermove', onMove);
+        handle.removeEventListener('pointerup', onUp);
+        handle.removeEventListener('pointercancel', onUp);
+        li.classList.remove('is-dragging');
+        const byId = new Map(reorderDraft.map((p) => [String(p.id), p]));
+        reorderDraft = [...list.children].map((el) => byId.get(el.dataset.id));
+        renderReorderList();
+    };
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+    handle.addEventListener('pointercancel', onUp);
+}
+
+function openReorder() {
+    reorderDraft = projects.slice();
+    renderReorderList();
+    document.getElementById('reorderDialog').showModal();
+}
+
+async function saveReorder() {
+    const btn = document.getElementById('reorderSave');
+    btn.disabled = true;
+    projects = reorderDraft.slice();
+    renderProjects();
+    await saveOrder();
+    btn.disabled = false;
+    document.getElementById('reorderDialog').close();
+}
+
+document.getElementById('reorderBtn').addEventListener('click', openReorder);
+document.getElementById('reorderCancel').addEventListener('click', () => document.getElementById('reorderDialog').close());
+document.getElementById('reorderSave').addEventListener('click', saveReorder);
+// Click on the backdrop closes the dialog.
+document.getElementById('reorderDialog').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) e.currentTarget.close();
+});
+
 function renderProjects() {
     const container = document.getElementById('projectsContainer');
     container.innerHTML = '';
@@ -223,6 +337,7 @@ function updateAdminUI() {
     const signInBtn = document.getElementById('g_id_signin');
 
     addCard.style.display = isAdmin ? '' : 'none';
+    document.getElementById('reorderBtn').style.display = isAdmin ? '' : 'none';
     signOutBtn.style.display = isAdmin ? '' : 'none';
     signInBtn.style.display = isAdmin ? 'none' : '';
     signedInAs.textContent = isAdmin ? `Signed in as ${adminName || adminEmail}` : '';
