@@ -1,116 +1,276 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!doctype html>
+<html lang="pt-PT" data-lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4online · Pedro Santos</title>
-    <meta name="description" content="4online: serviços online de Pedro Santos (Santos Subtitles, SantosProxy, Alto Mar) e portefólio de projetos.">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>4online · Serviços e aplicações online</title>
+<meta name="description" content="4online: serviços online por subscrição ou pagamento único (SantosProxy, Santos Subtitles, Alto Mar) e aplicações para a escola, a casa e jogos." />
+<meta name="theme-color" content="#4f46e5" />
+<link rel="icon" href="/icons/4online.svg" type="image/svg+xml" />
+<link rel="icon" href="/icons/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+<meta property="og:title" content="4online" />
+<meta property="og:description" content="Serviços e aplicações online · Online services and apps" />
+<meta property="og:image" content="https://www.4online.pt/icons/icon-512.png" />
+<link rel="stylesheet" href="/site.css" />
+<link rel="stylesheet" href="/home.css" />
+<script>
+	// Língua antes de desenhar a página (sem piscar): ?lang=, escolha guardada, ou a do browser.
+	(function () {
+		var q = new URLSearchParams(location.search).get("lang"), s = null;
+		try { s = localStorage.getItem("lang"); } catch (e) {}
+		var l = q === "en" || q === "pt" ? q : s === "en" || s === "pt" ? s : /^pt/i.test(navigator.language || "pt") ? "pt" : "en";
+		document.documentElement.dataset.lang = l;
+		document.documentElement.lang = l === "pt" ? "pt-PT" : "en";
+	})();
+</script>
 </head>
 <body>
-    <header>
-        <div class="site-info">
-            <h1 class="signature">Pedro Santos</h1>
-            <p>My Projects — welcome to my portfolio!</p>
-        </div>
-        <div class="auth-area">
-            <span id="signedInAs"></span>
-            <div id="g_id_signin"></div>
-            <button id="reorderBtn" class="glass-btn" type="button" style="display:none">Reorder</button>
-            <button id="signOutBtn" class="glass-btn" type="button" style="display:none">Sign out</button>
-        </div>
-    </header>
+<header class="top">
+	<a class="brand" href="/"><img src="/icons/4online.svg" alt="" width="30" height="30" />4online</a>
+	<nav>
+		<a href="#servicos"><span lang="pt">Serviços</span><span lang="en">Services</span></a>
+		<a href="#projetos"><span lang="pt">Projetos</span><span lang="en">Projects</span></a>
+		<a href="#apoio"><span lang="pt">Apoio</span><span lang="en">Support</span></a>
+		<div class="seg" role="group" aria-label="Língua / Language">
+			<button type="button" data-set-lang="pt">PT</button>
+			<button type="button" data-set-lang="en">EN</button>
+		</div>
+	</nav>
+</header>
 
-    <main>
-        <section class="add-card" id="addCard" style="display:none">
-            <h2>Add New Project</h2>
-            <form id="projectForm">
-                <input type="text" id="projectName" placeholder="Project Name" required>
-                <input type="url" id="projectUrl" placeholder="Project URL" required>
-                <button type="submit" class="glass-btn">Add Project</button>
-            </form>
-        </section>
+<main>
+<section class="hero">
+	<p class="eyebrow">4online</p>
+	<h1>
+		<span lang="pt">Serviços e aplicações <span class="grad">online</span>, feitos em Portugal</span>
+		<span lang="en">Online <span class="grad">services and apps</span>, made in Portugal</span>
+	</h1>
+	<p class="lead">
+		<span lang="pt">A 4online reúne serviços digitais pagos, que funcionam no browser e no Stremio, e aplicações feitas para a escola, a casa e o tempo livre.</span>
+		<span lang="en">4online brings together paid digital services that run in your browser and in Stremio, and apps made for school, home and leisure.</span>
+	</p>
+	<p class="row">
+		<a class="btn" href="#servicos"><span lang="pt">Ver os serviços</span><span lang="en">See the services</span></a>
+		<a class="btn ghost" href="#apoio"><span lang="pt">Pagamentos e apoio</span><span lang="en">Payments and support</span></a>
+	</p>
+</section>
 
-        <section class="services" id="servicos" aria-labelledby="servicesTitle">
-            <div class="services-head">
-                <h2 id="servicesTitle"><span lang="pt">Serviços 4online</span><span lang="en">4online services</span></h2>
-                <div class="lang-switch" role="group" aria-label="Língua / Language">
-                    <button type="button" class="glass-btn card-btn" data-set-lang="pt">PT</button>
-                    <button type="button" class="glass-btn card-btn" data-set-lang="en">EN</button>
-                </div>
-            </div>
-            <p class="services-lead">
-                <span lang="pt">Serviços digitais pagos, prestados por Pedro Santos, Portugal. Os pagamentos são processados pelo Stripe, que é o comerciante registado (Merchant of Record) e emite a fatura.</span>
-                <span lang="en">Paid digital services provided by Pedro Santos, Portugal. Payments are processed by Stripe, the Merchant of Record, which issues the invoice.</span>
-            </p>
-            <div class="services-grid">
-                <article class="service-card">
-                    <h3>Santos Subtitles</h3>
-                    <p lang="pt">Addon para o Stremio que entrega legendas em português de Portugal traduzidas por inteligência artificial. Subscrição semanal, mensal ou anual.</p>
-                    <p lang="en">Stremio add-on that delivers subtitles in European Portuguese, translated by artificial intelligence. Weekly, monthly or yearly subscription.</p>
-                    <p class="service-price"><span lang="pt">Desde 0,99 €/semana, IVA incluído</span><span lang="en">From €0.99/week, VAT included</span></p>
-                    <nav class="service-links">
-                        <a href="https://stremio-subtitles.4online.pt/subscrever"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
-                        <a href="https://stremio-subtitles.4online.pt/termos"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
-                        <a href="https://stremio-subtitles.4online.pt/privacidade"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
-                        <a href="https://stremio-subtitles.4online.pt/reembolsos"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
-                    </nav>
-                </article>
-                <article class="service-card">
-                    <h3>SantosProxy</h3>
-                    <p lang="pt">Proxy web que funciona no browser, para privacidade (esconde o teu endereço IP dos sites que visitas) e para testar sites. Subscrição mensal.</p>
-                    <p lang="en">Browser-based web proxy for privacy (it hides your IP address from the sites you visit) and for testing websites. Monthly subscription.</p>
-                    <p class="service-price"><span lang="pt">Desde 4,99 €/mês, IVA incluído, 7 dias grátis</span><span lang="en">From €4.99/month, VAT included, 7-day free trial</span></p>
-                    <nav class="service-links">
-                        <a href="https://proxy.4online.pt/precos" data-en="https://proxy.4online.pt/en/pricing"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
-                        <a href="https://proxy.4online.pt/termos" data-en="https://proxy.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
-                        <a href="https://proxy.4online.pt/privacidade" data-en="https://proxy.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
-                        <a href="https://proxy.4online.pt/reembolsos" data-en="https://proxy.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
-                    </nav>
-                </article>
-                <article class="service-card">
-                    <h3>Alto Mar</h3>
-                    <p lang="pt">Plataforma de estudo para os exames de carta de navegador de recreio em Portugal (Patrão Local, de Costa e de Alto Mar), com correção por inteligência artificial. Pagamento único por curso, acesso durante 6 meses.</p>
-                    <p lang="en">Study platform for the Portuguese recreational boating licence exams (Local, Coastal and Offshore Skipper), with AI-assisted marking. One-time payment per course, 6 months of access.</p>
-                    <p class="service-price"><span lang="pt">Desde 4,99 € por curso, IVA incluído</span><span lang="en">From €4.99 per course, VAT included</span></p>
-                    <nav class="service-links">
-                        <a href="https://altomar.4online.pt/" data-en="https://altomar.4online.pt/en"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
-                        <a href="https://altomar.4online.pt/termos" data-en="https://altomar.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
-                        <a href="https://altomar.4online.pt/privacidade" data-en="https://altomar.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
-                        <a href="https://altomar.4online.pt/reembolsos" data-en="https://altomar.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
-                    </nav>
-                </article>
-            </div>
-        </section>
+<!-- ===================== Serviços pagos ===================== -->
+<section id="servicos">
+	<div class="section-head">
+		<div>
+			<p class="eyebrow"><span lang="pt">Serviços pagos</span><span lang="en">Paid services</span></p>
+			<h2><span lang="pt">Serviços 4online</span><span lang="en">4online services</span></h2>
+		</div>
+		<p><span lang="pt">Preços com IVA incluído. Cada serviço tem a sua página de preços, termos, privacidade e reembolsos.</span><span lang="en">Prices include VAT. Each service has its own pricing, terms, privacy and refund pages.</span></p>
+	</div>
+	<div class="cards three">
+		<a class="tile service" href="https://proxy.4online.pt/">
+			<img class="shot" src="/img/proxy.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip paid"><span lang="pt">Subscrição mensal</span><span lang="en">Monthly subscription</span></span><span class="chip"><span lang="pt">7 dias grátis</span><span lang="en">7-day free trial</span></span></div>
+				<h4>SantosProxy</h4>
+				<p><span lang="pt">Proxy web privado que funciona no browser, sem instalar nada: esconde o teu endereço IP dos sites que visitas e serve para testar sites.</span><span lang="en">A private web proxy that runs in your browser, with nothing to install: it hides your IP address from the sites you visit and helps you test websites.</span></p>
+				<p class="price"><span lang="pt">Desde 4,99 €/mês</span><span lang="en">From €4.99/month</span></p>
+				<span class="host">proxy.4online.pt</span>
+				<span class="go"><span lang="pt">Abrir o SantosProxy →</span><span lang="en">Open SantosProxy →</span></span>
+			</div>
+		</a>
+		<a class="tile service" href="https://stremio-subtitles.4online.pt/">
+			<img class="shot" src="/img/subtitles.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip paid"><span lang="pt">Subscrição</span><span lang="en">Subscription</span></span><span class="chip"><span lang="pt">24 h grátis</span><span lang="en">24 h free trial</span></span></div>
+				<h4>Santos Subtitles</h4>
+				<p><span lang="pt">Addon para o Stremio que encontra a legenda certa para o teu ficheiro e, se não existir na tua língua, a traduz com IA, incluindo para português de Portugal.</span><span lang="en">A Stremio add-on that finds the right subtitle for your file and, if none exists in your language, translates one with AI, including into European Portuguese.</span></p>
+				<p class="price"><span lang="pt">Desde 0,99 €/semana</span><span lang="en">From €0.99/week</span></p>
+				<span class="host">stremio-subtitles.4online.pt</span>
+				<span class="go"><span lang="pt">Abrir o Santos Subtitles →</span><span lang="en">Open Santos Subtitles →</span></span>
+			</div>
+		</a>
+		<a class="tile service" href="https://altomar.4online.pt/">
+			<img class="shot" src="/img/altomar.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip paid"><span lang="pt">Pagamento único</span><span lang="en">One-time payment</span></span><span class="chip"><span lang="pt">Vela grátis</span><span lang="en">Sailing free</span></span></div>
+				<h4>Alto Mar</h4>
+				<p><span lang="pt">Preparação para os exames de carta de navegador de recreio (Patrão Local, de Costa e de Alto Mar), com perguntas de treino e correção por IA. Acesso durante 6 meses.</span><span lang="en">Preparation for the Portuguese recreational boating licence exams (Local, Coastal and Offshore Skipper), with practice questions and AI marking. 6 months of access.</span></p>
+				<p class="price"><span lang="pt">Desde 4,99 € por curso</span><span lang="en">From €4.99 per course</span></p>
+				<span class="host">altomar.4online.pt</span>
+				<span class="go"><span lang="pt">Abrir o Alto Mar →</span><span lang="en">Open Alto Mar →</span></span>
+			</div>
+		</a>
+	</div>
+</section>
 
-        <h2 class="projects-title"><span lang="pt">Projetos</span><span lang="en">Projects</span></h2>
-        <section class="projects">
-            <div id="projectsContainer" class="cards-container"></div>
-        </section>
-    </main>
+<!-- ===================== Projetos ===================== -->
+<section id="projetos">
+	<div class="section-head">
+		<div>
+			<p class="eyebrow"><span lang="pt">Gratuitos ou de uso interno</span><span lang="en">Free or for internal use</span></p>
+			<h2><span lang="pt">Projetos</span><span lang="en">Projects</span></h2>
+		</div>
+		<p><span lang="pt">Aplicações feitas para uma escola, para casa e para jogar. Algumas pedem início de sessão.</span><span lang="en">Apps made for a school, for home and for play. Some require signing in.</span></p>
+	</div>
 
-    <dialog id="reorderDialog" class="reorder-dialog" aria-labelledby="reorderTitle">
-        <div class="reorder-head">
-            <h2 id="reorderTitle">Reorder projects</h2>
-            <p>Drag the rows or use the arrows. The first one shows first on the site.</p>
-        </div>
-        <ol id="reorderList" class="reorder-list"></ol>
-        <div class="reorder-actions">
-            <button type="button" class="glass-btn card-btn" id="reorderCancel">Cancel</button>
-            <button type="button" class="glass-btn card-btn primary" id="reorderSave">Save order</button>
-        </div>
-    </dialog>
+	<h3 class="group"><span lang="pt">Escola e ensino</span><span lang="en">School and teaching</span></h3>
+	<div class="cards">
+		<article class="tile wide">
+			<img class="shot" src="/img/aulas.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Plataforma escolar</span><span lang="en">School platform</span></span></div>
+				<h4>EduAIX</h4>
+				<p><span lang="pt">Plataforma da escola para testes, trabalhos, presenças, conteúdos e avaliação dos alunos, com o site das aulas e a entrada rápida para responder a testes.</span><span lang="en">The school platform for quizzes, assignments, attendance, content and student assessment, with the lessons site and a quick entry for answering quizzes.</span></p>
+				<div class="subs">
+					<a class="sub" href="https://edu.4online.pt/"><span><span lang="pt">Plataforma</span><span lang="en">Platform</span><small><span lang="pt">Professores e alunos (com sessão)</span><span lang="en">Teachers and students (sign-in)</span></small></span></a>
+					<a class="sub" href="https://edu.4online.pt/aulas"><span><span lang="pt">Aulas</span><span lang="en">Lessons</span><small><span lang="pt">Todas as aulas, por disciplina e módulo</span><span lang="en">All lessons, by subject and module</span></small></span></a>
+					<a class="sub" href="https://edu.4online.pt/resposta"><span><span lang="pt">Responder a um teste</span><span lang="en">Answer a quiz</span><small><span lang="pt">Com o código dado pelo professor</span><span lang="en">With the code given by the teacher</span></small></span></a>
+				</div>
+			</div>
+		</article>
+		<article class="tile">
+			<img class="shot" src="/img/inquerito.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Biblioteca</span><span lang="en">Library</span></span></div>
+				<h4><span lang="pt">Biblioteca Escolar</span><span lang="en">School Library</span></h4>
+				<p><span lang="pt">Gestão da biblioteca de uma escola profissional: catálogo, leitores, empréstimos e manuais escolares.</span><span lang="en">Library management for a vocational school: catalogue, readers, loans and textbooks.</span></p>
+				<div class="subs">
+					<a class="sub" href="https://biblioteca-escolar.4online.pt/"><span><span lang="pt">Gestão da biblioteca</span><span lang="en">Library management</span><small><span lang="pt">Com sessão</span><span lang="en">Sign-in</span></small></span></a>
+					<a class="sub" href="https://biblioteca-inquerito.4online.pt/"><span><span lang="pt">Inquérito de satisfação</span><span lang="en">Satisfaction survey</span><small><span lang="pt">Aberto a todos</span><span lang="en">Open to everyone</span></small></span></a>
+				</div>
+			</div>
+		</article>
+		<a class="tile" href="https://epm-material.4online.pt/">
+			<img class="shot" src="/img/epmmaterial.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Inventário</span><span lang="en">Inventory</span></span></div>
+				<h4>EPM Material</h4>
+				<p><span lang="pt">Controlo do material e do equipamento de uma escola: onde está, em que estado e quem o usa.</span><span lang="en">Tracks a school's equipment: where it is, its condition and who is using it.</span></p>
+				<span class="host">epm-material.4online.pt</span>
+			</div>
+		</a>
+		<a class="tile" href="https://explicacoes-cc.4online.pt/">
+			<img class="shot" src="/img/explicacoes.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Explicações</span><span lang="en">Tutoring</span></span></div>
+				<h4>ContaExplica</h4>
+				<p><span lang="pt">Explicações de contabilidade online, do ensino profissional e secundário ao mestrado, com preços claros.</span><span lang="en">Online accounting tutoring, from vocational and secondary school to master's level, with clear prices.</span></p>
+				<span class="host">explicacoes-cc.4online.pt</span>
+			</div>
+		</a>
+	</div>
 
-    <footer>
-        <p class="footer-links">
-            <a id="contactLink" href="mailto:support@store.4online.pt"><span lang="pt">Contacto</span><span lang="en">Contact</span></a>
-            <a href="https://www.livroreclamacoes.pt" rel="noopener"><span lang="pt">Livro de Reclamações</span><span lang="en">Complaints Book</span></a>
-        </p>
-        <p id="legalLine">&copy; 2026 4online · Pedro Santos</p>
-        <p class="footer-uuid">Machine UUID: <span id="uuid"></span></p>
-    </footer>
+	<h3 class="group"><span lang="pt">Casa e dia a dia</span><span lang="en">Home and everyday</span></h3>
+	<div class="cards">
+		<a class="tile" href="https://santoshome.4online.pt/">
+			<img class="shot" src="/img/santoshome.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Casa inteligente</span><span lang="en">Smart home</span></span></div>
+				<h4>SantosHome</h4>
+				<p><span lang="pt">Painel para controlar a casa inteligente (Fibaro e Apple Home): luzes, temperatura e equipamentos num só sítio.</span><span lang="en">A dashboard for the smart home (Fibaro and Apple Home): lights, temperature and devices in one place.</span></p>
+				<span class="host">santoshome.4online.pt</span>
+			</div>
+		</a>
+		<a class="tile" href="https://meals.4online.pt/">
+			<img class="shot" src="/img/meals.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Refeições</span><span lang="en">Meals</span></span></div>
+				<h4>Meals</h4>
+				<p><span lang="pt">Receitas, planeamento semanal das refeições e lista de compras, com foco na saúde do coração.</span><span lang="en">Recipes, weekly meal planning and a shopping list, with a focus on heart health.</span></p>
+				<span class="host">meals.4online.pt</span>
+			</div>
+		</a>
+		<a class="tile" href="https://onenote.4online.pt/">
+			<img class="shot" src="/img/onenote.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip">iPhone</span></div>
+				<h4>OneNote+</h4>
+				<p><span lang="pt">Um cliente simples e bonito para iPhone dos teus cadernos do Microsoft OneNote.</span><span lang="en">A simple, beautiful iPhone client for your Microsoft OneNote notebooks.</span></p>
+				<span class="host">onenote.4online.pt</span>
+			</div>
+		</a>
+	</div>
 
-    <script src="app.js"></script>
+	<h3 class="group"><span lang="pt">Jogos</span><span lang="en">Games</span></h3>
+	<div class="cards three">
+		<a class="tile" href="https://jogoporquinho.4online.pt/">
+			<img class="shot" src="/img/porquinho.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Jogo</span><span lang="en">Game</span></span></div>
+				<h4>Porquinho Guloso</h4>
+				<p><span lang="pt">Jogo para todas as idades criado para a Feira do Porco do Montijo, com recordes do dia.</span><span lang="en">A game for all ages made for the Montijo Pork Fair, with daily high scores.</span></p>
+				<span class="host">jogoporquinho.4online.pt</span>
+			</div>
+		</a>
+		<a class="tile" href="https://sudo-murder.4online.pt/">
+			<img class="shot" src="/img/murdoku.jpg" alt="" loading="lazy" width="800" height="500" />
+			<div class="body">
+				<div class="badges"><span class="chip"><span lang="pt">Puzzle</span><span lang="en">Puzzle</span></span></div>
+				<h4>Murdoku</h4>
+				<p><span lang="pt">Companheiro interativo do livro Murdoku: resolve os 80 crimes com uma grelha de dedução, pistas e verificação do culpado.</span><span lang="en">An interactive companion to the Murdoku book: solve all 80 crimes with a deduction grid, clues and a culprit check.</span></p>
+				<span class="host">sudo-murder.4online.pt</span>
+			</div>
+		</a>
+	</div>
+</section>
+
+<!-- ===================== Pagamentos e apoio ===================== -->
+<section id="apoio">
+	<div class="section-head">
+		<div>
+			<p class="eyebrow"><span lang="pt">Para clientes</span><span lang="en">For customers</span></p>
+			<h2><span lang="pt">Pagamentos e apoio</span><span lang="en">Payments and support</span></h2>
+		</div>
+	</div>
+	<div class="info">
+		<div class="card">
+			<h3><span lang="pt">Pagamentos seguros</span><span lang="en">Secure payments</span></h3>
+			<p><span lang="pt">Os pagamentos dos serviços são processados pelo Stripe, o comerciante registado (Merchant of Record), através do serviço Link. O Stripe emite a fatura e trata do IVA. No extrato do cartão aparece «LINK.COM*».</span><span lang="en">Payments for the services are processed by Stripe, the Merchant of Record, through its Link service. Stripe issues the invoice and handles VAT. Your card statement shows "LINK.COM*".</span></p>
+		</div>
+		<div class="card">
+			<h3><span lang="pt">Cancelar e reembolsos</span><span lang="en">Cancelling and refunds</span></h3>
+			<p><span lang="pt">As subscrições cancelam-se a qualquer momento na área de cliente de cada serviço, sem custos. Podes pedir o reembolso nos 14 dias seguintes a uma compra.</span><span lang="en">Subscriptions can be cancelled at any time in each service's customer area, at no cost. You can ask for a refund within 14 days of a purchase.</span></p>
+		</div>
+		<div class="card">
+			<h3><span lang="pt">Contacto</span><span lang="en">Contact</span></h3>
+			<p><span lang="pt">Dúvidas, apoio ou pedidos de reembolso: <a href="mailto:support@store.4online.pt">support@store.4online.pt</a>. Respondemos normalmente em dois dias úteis.</span><span lang="en">Questions, support or refund requests: <a href="mailto:support@store.4online.pt">support@store.4online.pt</a>. We usually reply within two business days.</span></p>
+		</div>
+	</div>
+
+	<div class="table" style="margin-top:16px">
+		<table class="legal-table">
+			<thead><tr><th><span lang="pt">Serviço</span><span lang="en">Service</span></th><th><span lang="pt">Preços</span><span lang="en">Pricing</span></th><th><span lang="pt">Termos</span><span lang="en">Terms</span></th><th><span lang="pt">Privacidade</span><span lang="en">Privacy</span></th><th><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></th></tr></thead>
+			<tbody>
+				<tr><td>SantosProxy</td>
+					<td><a href="https://proxy.4online.pt/precos" data-en="https://proxy.4online.pt/en/pricing"><span lang="pt">Preços</span><span lang="en">Pricing</span></a></td>
+					<td><a href="https://proxy.4online.pt/termos" data-en="https://proxy.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a></td>
+					<td><a href="https://proxy.4online.pt/privacidade" data-en="https://proxy.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a></td>
+					<td><a href="https://proxy.4online.pt/reembolsos" data-en="https://proxy.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a></td></tr>
+				<tr><td>Santos Subtitles</td>
+					<td><a href="https://stremio-subtitles.4online.pt/subscrever"><span lang="pt">Preços</span><span lang="en">Pricing</span></a></td>
+					<td><a href="https://stremio-subtitles.4online.pt/termos" data-en="https://stremio-subtitles.4online.pt/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a></td>
+					<td><a href="https://stremio-subtitles.4online.pt/privacidade" data-en="https://stremio-subtitles.4online.pt/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a></td>
+					<td><a href="https://stremio-subtitles.4online.pt/reembolsos" data-en="https://stremio-subtitles.4online.pt/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a></td></tr>
+				<tr><td>Alto Mar</td>
+					<td><a href="https://altomar.4online.pt/#precos" data-en="https://altomar.4online.pt/en#pricing"><span lang="pt">Preços</span><span lang="en">Pricing</span></a></td>
+					<td><a href="https://altomar.4online.pt/termos" data-en="https://altomar.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a></td>
+					<td><a href="https://altomar.4online.pt/privacidade" data-en="https://altomar.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a></td>
+					<td><a href="https://altomar.4online.pt/reembolsos" data-en="https://altomar.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a></td></tr>
+			</tbody>
+		</table>
+	</div>
+</section>
+</main>
+
+<footer>
+	<nav>
+		<a href="#servicos"><span lang="pt">Serviços</span><span lang="en">Services</span></a>
+		<a href="#projetos"><span lang="pt">Projetos</span><span lang="en">Projects</span></a>
+		<a href="mailto:support@store.4online.pt"><span lang="pt">Contacto</span><span lang="en">Contact</span></a>
+		<a href="https://www.livroreclamacoes.pt" rel="noopener"><span lang="pt">Livro de Reclamações</span><span lang="en">Complaints book</span></a>
+	</nav>
+	<p>© 2026 4online · Portugal</p>
+</footer>
+
+<script src="/app.js" defer></script>
 </body>
 </html>
