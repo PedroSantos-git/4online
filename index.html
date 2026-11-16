@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects</title>
+    <title>4online · Pedro Santos</title>
+    <meta name="description" content="4online: serviços online de Pedro Santos (Santos Subtitles, SantosProxy, Alto Mar) e portefólio de projetos.">
     <link rel="stylesheet" href="styles.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -31,6 +32,59 @@
             </form>
         </section>
 
+        <section class="services" id="servicos" aria-labelledby="servicesTitle">
+            <div class="services-head">
+                <h2 id="servicesTitle"><span lang="pt">Serviços 4online</span><span lang="en">4online services</span></h2>
+                <div class="lang-switch" role="group" aria-label="Língua / Language">
+                    <button type="button" class="glass-btn card-btn" data-set-lang="pt">PT</button>
+                    <button type="button" class="glass-btn card-btn" data-set-lang="en">EN</button>
+                </div>
+            </div>
+            <p class="services-lead">
+                <span lang="pt">Serviços digitais pagos, prestados por Pedro Santos, Portugal. Os pagamentos são processados pelo Stripe, que é o comerciante registado (Merchant of Record) e emite a fatura.</span>
+                <span lang="en">Paid digital services provided by Pedro Santos, Portugal. Payments are processed by Stripe, the Merchant of Record, which issues the invoice.</span>
+            </p>
+            <div class="services-grid">
+                <article class="service-card">
+                    <h3>Santos Subtitles</h3>
+                    <p lang="pt">Addon para o Stremio que entrega legendas em português de Portugal traduzidas por inteligência artificial. Subscrição semanal, mensal ou anual.</p>
+                    <p lang="en">Stremio add-on that delivers subtitles in European Portuguese, translated by artificial intelligence. Weekly, monthly or yearly subscription.</p>
+                    <p class="service-price"><span lang="pt">Desde 0,99 €/semana, IVA incluído</span><span lang="en">From €0.99/week, VAT included</span></p>
+                    <nav class="service-links">
+                        <a href="https://stremio-subtitles.4online.pt/subscrever"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
+                        <a href="https://stremio-subtitles.4online.pt/termos"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
+                        <a href="https://stremio-subtitles.4online.pt/privacidade"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
+                        <a href="https://stremio-subtitles.4online.pt/reembolsos"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
+                    </nav>
+                </article>
+                <article class="service-card">
+                    <h3>SantosProxy</h3>
+                    <p lang="pt">Proxy web que funciona no browser, para privacidade (esconde o teu endereço IP dos sites que visitas) e para testar sites. Subscrição mensal.</p>
+                    <p lang="en">Browser-based web proxy for privacy (it hides your IP address from the sites you visit) and for testing websites. Monthly subscription.</p>
+                    <p class="service-price"><span lang="pt">Desde 4,99 €/mês, IVA incluído, 7 dias grátis</span><span lang="en">From €4.99/month, VAT included, 7-day free trial</span></p>
+                    <nav class="service-links">
+                        <a href="https://proxy.4online.pt/precos" data-en="https://proxy.4online.pt/en/pricing"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
+                        <a href="https://proxy.4online.pt/termos" data-en="https://proxy.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
+                        <a href="https://proxy.4online.pt/privacidade" data-en="https://proxy.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
+                        <a href="https://proxy.4online.pt/reembolsos" data-en="https://proxy.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
+                    </nav>
+                </article>
+                <article class="service-card">
+                    <h3>Alto Mar</h3>
+                    <p lang="pt">Plataforma de estudo para os exames de carta de navegador de recreio em Portugal (Patrão Local, de Costa e de Alto Mar), com correção por inteligência artificial. Pagamento único por curso, acesso durante 6 meses.</p>
+                    <p lang="en">Study platform for the Portuguese recreational boating licence exams (Local, Coastal and Offshore Skipper), with AI-assisted marking. One-time payment per course, 6 months of access.</p>
+                    <p class="service-price"><span lang="pt">Desde 4,99 € por curso, IVA incluído</span><span lang="en">From €4.99 per course, VAT included</span></p>
+                    <nav class="service-links">
+                        <a href="https://altomar.4online.pt/" data-en="https://altomar.4online.pt/en"><span lang="pt">Preços</span><span lang="en">Pricing</span></a>
+                        <a href="https://altomar.4online.pt/termos" data-en="https://altomar.4online.pt/en/terms"><span lang="pt">Termos</span><span lang="en">Terms</span></a>
+                        <a href="https://altomar.4online.pt/privacidade" data-en="https://altomar.4online.pt/en/privacy"><span lang="pt">Privacidade</span><span lang="en">Privacy</span></a>
+                        <a href="https://altomar.4online.pt/reembolsos" data-en="https://altomar.4online.pt/en/refunds"><span lang="pt">Reembolsos</span><span lang="en">Refunds</span></a>
+                    </nav>
+                </article>
+            </div>
+        </section>
+
+        <h2 class="projects-title"><span lang="pt">Projetos</span><span lang="en">Projects</span></h2>
         <section class="projects">
             <div id="projectsContainer" class="cards-container"></div>
         </section>
@@ -49,7 +103,11 @@
     </dialog>
 
     <footer>
-        <p>&copy; 2026 Pedro Santos. All rights reserved.</p>
+        <p class="footer-links">
+            <a id="contactLink" href="mailto:support@store.4online.pt"><span lang="pt">Contacto</span><span lang="en">Contact</span></a>
+            <a href="https://www.livroreclamacoes.pt" rel="noopener"><span lang="pt">Livro de Reclamações</span><span lang="en">Complaints Book</span></a>
+        </p>
+        <p id="legalLine">&copy; 2026 4online · Pedro Santos</p>
         <p class="footer-uuid">Machine UUID: <span id="uuid"></span></p>
     </footer>
 

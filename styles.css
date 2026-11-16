@@ -634,3 +634,33 @@ footer {
         backdrop-filter: none;
     }
 }
+
+/* ---- Serviços 4online (pagos) ---- */
+html[data-lang="en"] [lang="pt"],
+html:not([data-lang="en"]) [lang="en"] { display: none !important; }
+
+.services,
+.service-card {
+    position: relative;
+    isolation: isolate;
+    background: var(--glass-tint);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-shadow);
+}
+.services { padding: 1.75rem; border-radius: var(--radius-xl); margin-bottom: 2.25rem; }
+.service-card { padding: 1.4rem 1.4rem 1.2rem; border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.05); }
+.services-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.services-head h2, .projects-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; }
+.projects-title { margin: 0 0 1rem 0.3rem; }
+.lang-switch { display: flex; gap: 0.4rem; }
+.lang-switch .glass-btn[aria-pressed="true"] { background: rgba(255, 255, 255, 0.22); }
+.services-lead { color: var(--text-dim); margin: 0.6rem 0 1.4rem; line-height: 1.5; max-width: 70ch; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.1rem; }
+.service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+.service-card p { color: var(--text-dim); line-height: 1.5; font-size: 0.95rem; }
+.service-card .service-price { color: var(--text); font-weight: 600; margin: 0.8rem 0; font-size: 0.92rem; }
+.service-links { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; }
+.service-links a, .footer-links a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; font-size: 0.9rem; }
+.service-links a:hover, .footer-links a:hover { color: #fff; }
+.footer-links { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.4rem; }

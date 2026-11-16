@@ -470,3 +470,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     await refreshSession();
     await loadProjects();
 });
+
+// ---- Língua da secção de serviços (PT/EN) e rodapé legal ----
+function setLang(lang) {
+    document.documentElement.dataset.lang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-set-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)));
+    // Os sites com rotas por língua têm links próprios em inglês.
+    document.querySelectorAll('a[data-en]').forEach((a) => {
+        a.dataset.pt ??= a.getAttribute('href');
+        a.setAttribute('href', lang === 'en' ? a.dataset.en : a.dataset.pt);
+    });
+    try { localStorage.setItem('lang', lang); } catch {}
+}
+
+async function loadLegal() {
+    try {
+        const r = await fetch('/api/legal');
+        if (!r.ok) return;
+        const l = await r.json();
+        const parts = ['© 2026 4online', l.name, l.nif && `NIF ${l.nif}`, l.address].filter(Boolean);
+        document.getElementById('legalLine').textContent = parts.join(' · ');
+        if (l.email) document.getElementById('contactLink').href = `mailto:${l.email}`;
+    } catch {}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    let saved = null;
+    try { saved = localStorage.getItem('lang'); } catch {}
+    const q = new URLSearchParams(location.search).get('lang');
+    const browser = (navigator.language || 'pt').toLowerCase().startsWith('pt') ? 'pt' : 'en';
+    setLang(q === 'en' || q === 'pt' ? q : saved === 'en' || saved === 'pt' ? saved : browser);
+    document.querySelectorAll('[data-set-lang]').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+    loadLegal();
+});
