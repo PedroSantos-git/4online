@@ -5,3 +5,4 @@ node_modules
 .agents
 .claude/settings.local.json
 skills-lock.json
+.claude/skills
